@@ -1,0 +1,38 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn.lock
+pnpm-lock.yaml
+
+# Env / secrets
+.env
+*.env
+*.pem
+*.key
+*.crt
+wallet/
+identity/
+certs/
+keys/
+msp/
+*.p12
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Build / cache
+dist/
+build/
+.cache/
+
+# Fabric artifacts (avoid committing any copied network material)
+organizations/
+channel-artifacts/
+*.pb
+*.tar.gz

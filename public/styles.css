@@ -1,0 +1,300 @@
+/* ================================
+   Tender Transparency Ledger (Demo)
+   Bootstrap 5 + GIGW-inspired theme
+   ================================ */
+
+/* Base palette + type */
+:root{
+  --gov-bg: #f6f7fb;
+  --gov-surface: #ffffff;
+  --gov-text: #0b1220;
+  --gov-muted: #5b667a;
+  --gov-border: #d9dee7;
+
+  --gov-primary: #0b3d91;
+  --gov-primary-2: #0a2f6b;
+  --gov-saffron: #ff9933;
+  --gov-green: #128807;
+
+  --gov-shadow: 0 10px 28px rgba(16, 24, 40, 0.10);
+  --gov-radius: 16px;
+
+  --gov-font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+
+.gov-bg{
+  background: var(--gov-bg);
+  color: var(--gov-text);
+  font-family: var(--gov-font);
+}
+
+.fw-black{ font-weight: 900 !important; }
+
+/* Skip link: keep it for keyboard users; invisible unless focused */
+.gov-skip-link{
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  background: #fff;
+  border: 3px solid rgba(11, 61, 145, .35);
+  padding: 10px 12px;
+  border-radius: 12px;
+  z-index: 1000;
+  text-decoration: none;
+}
+.gov-skip-link:focus{
+  left: 16px;
+  top: 16px;
+}
+
+/* Tricolour bar */
+.gov-tricolour{
+  height: 6px;
+  background: linear-gradient(90deg, var(--gov-saffron), #ffffff 42%, #ffffff 58%, var(--gov-green));
+}
+
+/* Utility strip */
+.gov-utility{
+  background: #eef3ff;
+}
+.gov-utility .container-xxl { row-gap: 6px; }
+.gov-utility-title{
+  font-weight: 800;
+  color: #24324f;
+  letter-spacing: .2px;
+}
+.gov-utility-link{
+  text-decoration: none;
+  color: #0b57d0;
+  font-weight: 600;
+}
+.gov-utility-link:hover{ text-decoration: underline; }
+
+/* Pills / badges */
+.gov-badge{
+  font-weight: 700;
+  color: #334155;
+}
+
+.gov-disclaimer{
+  background: #fff3cd !important;
+  color: #7a4b00 !important;
+  border: 1px solid rgba(122,75,0,.18) !important;
+}
+
+.gov-pill{
+  font-weight: 700;
+  color: #22304b !important;
+  background: #f7f9ff !important;
+  border-color: #d9e3ff !important;
+}
+
+.gov-title{
+  letter-spacing: .2px;
+}
+
+/* Cards */
+.gov-card{
+  border-radius: var(--gov-radius) !important;
+  box-shadow: var(--gov-shadow) !important;
+}
+.gov-card .card-body{
+  padding: 18px;
+}
+
+/* Mini side panel in evaluator view */
+.gov-mini-panel{
+  background: #f8fafc;
+  border: 1px solid var(--gov-border);
+  border-radius: 14px;
+  padding: 12px 12px;
+  min-width: 280px;
+}
+
+/* Improve bootstrap primary to navy */
+.btn-primary{
+  background: var(--gov-primary) !important;
+  border-color: var(--gov-primary) !important;
+}
+.btn-primary:hover{
+  background: var(--gov-primary-2) !important;
+  border-color: var(--gov-primary-2) !important;
+}
+.btn-outline-primary{
+  border-color: rgba(11,61,145,.35) !important;
+  color: var(--gov-primary) !important;
+}
+.btn-outline-primary:hover{
+  background: #eef3ff !important;
+}
+
+/* Small buttons look a bit nicer with this baseline */
+.btn-sm{
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+
+/* Search field compact */
+.gov-search{
+  min-width: 260px;
+}
+@media (max-width: 576px){
+  .gov-search{ min-width: 100%; }
+}
+
+/* Table wrap */
+.gov-table-wrap{
+  border: 1px solid var(--gov-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.letterspace{
+  letter-spacing: .9px;
+}
+
+/* Status alert styling hooks for app.js */
+#statusWrap.alert-error{
+  background: #ffe3e1 !important;
+  border-color: rgba(180,35,24,.25) !important;
+  color: #7a1712 !important;
+}
+#statusWrap.alert-ok{
+  background: #dff7ea !important;
+  border-color: rgba(6,118,71,.25) !important;
+  color: #065f3b !important;
+}
+
+/* Details box */
+.gov-details{
+  border: 1px solid var(--gov-border);
+  border-radius: 14px;
+  background: #fff;
+  padding: 14px;
+  min-height: 90px;
+}
+
+/* Timeline (audit) */
+.gov-timeline{
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  border-left: 4px solid #d9e3ff;
+  border-radius: 12px;
+}
+
+.gov-timeline li{
+  position: relative;
+  padding: 12px 10px 12px 16px;
+  margin-left: 12px;
+  border-bottom: 1px dashed #e7ebf3;
+  background: transparent;
+}
+.gov-timeline li::before{
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 18px;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--gov-primary);
+  box-shadow: 0 0 0 4px rgba(11,61,145,.12);
+}
+.gov-timeline li:last-child{
+  border-bottom: none;
+}
+
+.audit-summary{
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+
+/* Raw JSON (collapsed by default, toggle reveals it) */
+pre.audit-details{
+  margin: 10px 0 0;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #e7ebf3;
+  background: #fbfcff;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.35;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* "What's new" ticker */
+.gov-ticker{
+  border: 1px solid var(--gov-border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+.gov-ticker-inner{
+  max-height: 220px;
+  overflow: hidden;
+  position: relative;
+}
+.gov-ticker-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  animation: govTickerScroll 10s linear infinite;
+}
+.gov-ticker-list li{
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef1f6;
+  font-size: 14px;
+  color: #24324f;
+}
+.gov-ticker-list li:last-child{ border-bottom: none; }
+.gov-ticker.paused .gov-ticker-list{
+  animation-play-state: paused;
+}
+
+@keyframes govTickerScroll{
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+@media (prefers-reduced-motion: reduce){
+  .gov-ticker-list{ animation: none; }
+}
+
+/* Inline form errors (shown near the form, not just at the top) */
+.form-error{
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
+  padding: 10px 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  font-weight: 650;
+}
+
+.is-invalid{
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+/* Cleaner focus without overpowering the UI */
+:focus-visible{
+  outline: 3px solid rgba(11, 61, 145, .25);
+  outline-offset: 2px;
+}
+
+/* Make code tags look neat */
+code{
+  background: #f1f5ff;
+  border: 1px solid #d9e3ff;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+/* Make hr softer */
+hr{
+  border-top-color: #e8ecf5 !important;
+}

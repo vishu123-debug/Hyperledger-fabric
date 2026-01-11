@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tender Transparency Ledger (Demo)</title>
+  <meta name="description" content="Demo portal showing immutability, audit trails, role-based authority and traceability using Hyperledger Fabric." />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body class="gov-bg">
+  <a class="gov-skip-link" href="#main">Skip to main content</a>
+
+  <div class="gov-tricolour" aria-hidden="true"></div>
+
+  <div class="gov-utility border-bottom">
+    <div class="container-xxl py-2 d-flex gap-2 align-items-center justify-content-between flex-wrap">
+      <div class="d-flex align-items-center gap-2">
+        <span class="gov-utility-title">Government of India (Demo UI Pattern)</span>
+        <span class="badge text-bg-light border gov-badge">Prototype</span>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <a class="gov-utility-link" href="/accessibility.html">Accessibility statement</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="bg-white border-bottom">
+    <div class="container-xxl py-3">
+      <div class="d-flex align-items-start justify-content-between gap-3 flex-wrap">
+        <div>
+          <div class="d-flex align-items-center gap-2 flex-wrap">
+            <h1 class="h4 mb-0 fw-black gov-title">Tender Transparency Ledger</h1>
+            <span class="badge rounded-pill text-bg-warning border gov-disclaimer">
+              Demo only — not an official government service
+            </span>
+          </div>
+          <div class="text-secondary mt-1">Immutability • Audit Trail • Role-based Authority • Traceability</div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button id="roleToggleBtn" class="btn btn-outline-primary fw-semibold" type="button">
+            Switch mode
+          </button>
+          <button id="refreshBtn" class="btn btn-primary fw-semibold" type="button">
+            Refresh
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container-xxl my-4" tabindex="-1">
+
+    <section class="card shadow-sm border-0 gov-card">
+      <div class="card-body">
+        <div class="d-flex align-items-start justify-content-between gap-3 flex-wrap">
+          <div>
+            <h2 class="h6 text-uppercase letterspace mb-2 text-secondary">Evaluator view</h2>
+
+            <div id="statusWrap"
+                 class="alert alert-primary mb-3 py-2"
+                 role="status"
+                 aria-live="polite"
+                 aria-atomic="true">
+              <span id="statusText" class="fw-semibold">Ready.</span>
+            </div>
+
+            <div class="d-flex gap-2 flex-wrap">
+              <span class="badge rounded-pill text-bg-light border gov-pill" id="authorityPill">Authority: —</span>
+              <span class="badge rounded-pill text-bg-light border gov-pill" id="modePill">Mode: —</span>
+              <span class="badge rounded-pill text-bg-light border gov-pill">
+                Purpose: show who did what, when, and with what authority
+              </span>
+            </div>
+
+            <p class="text-secondary mt-3 mb-0">
+              Auditor Mode (Org2) should fail on write actions with <strong>Access denied</strong>.
+              Reads and audit trail remain available.
+            </p>
+          </div>
+
+          <div class="gov-mini-panel">
+            <div class="small text-secondary fw-bold mb-2">Quick evaluator script (60 seconds)</div>
+            <ol class="small mb-0 ps-3 text-body-secondary">
+              <li>Authority mode (Org1): Create → View → Publish → Award</li>
+              <li>Check audit trail: MSP + TxID + timestamp</li>
+              <li>Auditor mode (Org2): try write → see Access denied</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="row g-4 mt-1">
+      <div class="col-lg-8">
+
+        <section class="card shadow-sm border-0 gov-card mb-4">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <h2 class="h5 mb-0 fw-bold">Create Tender (Draft)</h2>
+              <span class="text-secondary small">Fields are recorded immutably on ledger once saved.</span>
+            </div>
+            <hr class="my-3" />
+
+            <form id="createForm" novalidate>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label for="tenderId" class="form-label fw-semibold">Tender ID</label>
+                  <input id="tenderId" name="tenderId" type="text" class="form-control"
+                         placeholder="TND-001" autocomplete="off" required />
+                </div>
+
+                <div class="col-md-8">
+                  <label for="title" class="form-label fw-semibold">Title</label>
+                  <input id="title" name="title" type="text" class="form-control"
+                         placeholder="e.g., Road Repair Tender" autocomplete="off" required />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="department" class="form-label fw-semibold">Department</label>
+                  <input id="department" name="department" type="text" class="form-control"
+                         placeholder="e.g., PWD" autocomplete="off" required />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="estimatedValue" class="form-label fw-semibold">Estimated Value (₹)</label>
+                  <input id="estimatedValue" name="estimatedValue" type="number" inputmode="numeric"
+                         class="form-control" placeholder="5000000" required />
+                </div>
+
+                <div class="col-12 d-flex gap-2 flex-wrap mt-1">
+                  <button class="btn btn-primary fw-semibold" type="submit">Save Draft</button>
+                  <button class="btn btn-outline-secondary fw-semibold" type="reset">Clear</button>
+                  <span class="small text-secondary align-self-center">
+                    Tip: IDs like <code>TND-001</code>, <code>TND-002</code>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section class="card shadow-sm border-0 gov-card">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+              <h2 class="h5 mb-0 fw-bold">Tenders</h2>
+              <div class="d-flex align-items-center gap-2">
+                <label class="visually-hidden" for="search">Search tenders</label>
+                <input id="search" type="search" class="form-control gov-search"
+                       placeholder="Search by ID / department..." />
+              </div>
+            </div>
+
+            <hr class="my-3" />
+
+            <div class="table-responsive gov-table-wrap" tabindex="0" aria-label="Tenders table">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Tender ID</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Value</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" style="width: 120px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="tendersBody">
+                  <tr><td colspan="5" class="text-secondary">No data loaded yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="small text-secondary mt-2">
+              Select <strong>View</strong> to inspect details and the append-only audit trail.
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="position-sticky" style="top: 16px;">
+
+          <section class="card shadow-sm border-0 gov-card mb-4">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between gap-2">
+                <h2 class="h6 text-uppercase letterspace mb-0 text-secondary">What’s new</h2>
+                <button id="tickerToggleBtn" class="btn btn-sm btn-outline-secondary fw-semibold" type="button">
+                  Pause
+                </button>
+              </div>
+
+              <div id="ticker" class="gov-ticker mt-3" aria-label="Announcements (auto-scroll)">
+                <div class="gov-ticker-inner">
+                  <ul id="whatsNewList" class="gov-ticker-list">
+                    <li><span class="fw-bold text-secondary">Info:</span> Announcements will appear after tenders load.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="small text-secondary mt-2">
+                This panel summarises recent ledger activity (for quick review).
+              </div>
+            </div>
+          </section>
+
+          <section class="card shadow-sm border-0 gov-card">
+            <div class="card-body">
+              <h2 class="h6 text-uppercase letterspace mb-2 text-secondary">What this demo proves</h2>
+              <ul class="small text-body-secondary mb-0 ps-3">
+                <li><strong>Immutability:</strong> records stored on Fabric ledger.</li>
+                <li><strong>Audit trail:</strong> actions emit traceable events with TxID.</li>
+                <li><strong>Authority:</strong> Org1 can write; Org2 is read-only.</li>
+              </ul>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+    <section class="card shadow-sm border-0 gov-card mt-4">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+          <h2 class="h5 mb-0 fw-bold">Tender Details & Audit Trail</h2>
+          <span class="text-secondary small">Audit trail is append-only and ordered by time.</span>
+        </div>
+
+        <hr class="my-3" />
+
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <div class="small text-uppercase letterspace text-secondary fw-bold mb-2">Details</div>
+              <div id="detailsBox" class="gov-details text-secondary">
+                Select a tender to view details.
+              </div>
+            </div>
+
+            <div class="small text-uppercase letterspace text-secondary fw-bold mb-2">Role-based actions</div>
+
+            <form id="publishForm" class="mb-3" novalidate>
+              <div class="row g-2 align-items-end">
+                <div class="col-8">
+                  <label for="publishId" class="form-label fw-semibold">Tender ID</label>
+                  <input id="publishId" name="publishId" type="text" class="form-control" autocomplete="off" required />
+                </div>
+                <div class="col-4 d-grid">
+                  <button class="btn btn-primary fw-semibold" type="submit">Publish</button>
+                </div>
+              </div>
+            </form>
+
+            <form id="awardForm" class="mb-3" novalidate>
+              <div class="row g-2">
+                <div class="col-md-4">
+                  <label for="awardId" class="form-label fw-semibold">Tender ID</label>
+                  <input id="awardId" name="awardId" type="text" class="form-control" autocomplete="off" required />
+                </div>
+                <div class="col-md-8">
+                  <label for="awardedToOrg" class="form-label fw-semibold">Awarded To (Vendor/Org)</label>
+                  <input id="awardedToOrg" name="awardedToOrg" type="text" class="form-control"
+                         placeholder="Org2MSP / VendorX" autocomplete="off" required />
+                </div>
+                <div class="col-12">
+                  <label for="remarks" class="form-label fw-semibold">Remarks (optional)</label>
+                  <input id="remarks" name="remarks" type="text" class="form-control"
+                         placeholder="Authority note / reason" autocomplete="off" />
+                </div>
+                <div class="col-12 d-grid">
+                  <button class="btn btn-primary fw-semibold" type="submit">Award</button>
+                </div>
+              </div>
+            </form>
+
+            <form id="cancelForm" novalidate>
+              <div class="row g-2">
+                <div class="col-md-4">
+                  <label for="cancelId" class="form-label fw-semibold">Tender ID</label>
+                  <input id="cancelId" name="cancelId" type="text" class="form-control" autocomplete="off" required />
+                </div>
+                <div class="col-md-8">
+                  <label for="reason" class="form-label fw-semibold">Cancel Reason</label>
+                  <input id="reason" name="reason" type="text" class="form-control"
+                         placeholder="e.g., Budget revised / Scope change" autocomplete="off" required />
+                </div>
+                <div class="col-12 d-grid">
+                  <button class="btn btn-outline-danger fw-semibold" type="submit">Cancel</button>
+                </div>
+              </div>
+            </form>
+
+            <div class="small text-secondary mt-3">
+              In Auditor Mode, these actions should fail (expected), proving authority control.
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="small text-uppercase letterspace text-secondary fw-bold mb-2">Audit trail (append-only)</div>
+            <ol id="auditList" class="gov-timeline" aria-label="Audit trail">
+              <li class="text-secondary">Select a tender to load audit trail.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-white border-top mt-4">
+    <div class="container-xxl py-3 d-flex align-items-center justify-content-between flex-wrap gap-2">
+      <span class="text-secondary small">© Demo</span>
+      <span class="text-secondary small">Last updated: <span id="lastUpdated">—</span></span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/app.js" defer></script>
+</body>
+</html>

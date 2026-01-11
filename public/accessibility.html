@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accessibility Statement</title>
+  <meta name="description" content="Accessibility statement for the demo interface." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="gov-strip" aria-label="Government header strip">
+      <div class="container gov-strip-row">
+        <span class="gov-left">Government of India (Demo UI Pattern)</span>
+        <span class="gov-right">
+          <a href="/" class="gov-link">Home</a>
+          <span class="gov-sep" aria-hidden="true">|</span>
+          <a href="#main" class="gov-link">Skip to main</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="container header-row">
+      <div class="brand">
+        <div class="brand-title">Accessibility Statement</div>
+        <div class="brand-subtitle">Tender Transparency Ledger (Demo)</div>
+      </div>
+
+      <nav class="top-actions" aria-label="Top actions">
+        <a class="btn btn-secondary" href="/">Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container" role="main" tabindex="-1">
+    <section class="card">
+      <h1 class="h2">Accessibility commitment</h1>
+      <p>
+        This demo aims to be usable with keyboard navigation and screen readers. It uses semantic HTML landmarks,
+        clear labels, and visible focus indicators.
+      </p>
+
+      <h2 class="h2">Features</h2>
+      <ul>
+        <li>Skip-to-content link.</li>
+        <li>Semantic structure (header/main/footer).</li>
+        <li>Visible focus for interactive controls.</li>
+        <li>Readable layout and spacing.</li>
+      </ul>
+
+      <h2 class="h2">Limitations</h2>
+      <ul>
+        <li>This is a demo interface and not a production portal.</li>
+        <li>Some text may be technical due to evaluation evidence requirements.</li>
+      </ul>
+
+      <div class="actions">
+        <a class="btn" href="/">Back to Home</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-bottom">
+      <span>© Demo</span>
+      <span class="muted">Accessibility statement (demo)</span>
+    </div>
+  </footer>
+</body>
+</html>
