@@ -99,12 +99,12 @@ function showFormError(formEl, msg, inputEls = []) {
 
   inputEls.filter(Boolean).forEach(el => el.classList.add('is-invalid'));
 
-  // Make it obvious where the problem is.
+  
   formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
   const first = inputEls.find(Boolean);
   if (first) first.focus({ preventScroll: true });
 
-  // Keep the evaluator banner as a summary, but don’t rely on it.
+
   setStatus(`Error: ${msg}`, 'error');
 }
 
@@ -343,7 +343,7 @@ tickerToggleBtn?.addEventListener('click', () => {
   tickerToggleBtn.textContent = tickerPaused ? 'Resume' : 'Pause';
 });
 
-/* ---------- Form handlers (with local validation + inline errors) ---------- */
+/* Form handlers (with local validation + inline errors) */
 
 createForm.addEventListener('submit', async (e) => {
   e.preventDefault();
