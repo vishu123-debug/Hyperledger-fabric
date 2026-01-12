@@ -4,18 +4,26 @@ npm-debug.log*
 yarn.lock
 pnpm-lock.yaml
 
-# Env / secrets
+# Environment variables / secrets
 .env
 *.env
+
+# Fabric identities / keys / certs (NEVER COMMIT)
+wallet/
+identity/
+msp/
+keystore/
+signcerts/
 *.pem
 *.key
 *.crt
-wallet/
-identity/
-certs/
-keys/
-msp/
-*.p12
+priv_sk
+
+# Fabric artifacts / packages
+organizations/
+channel-artifacts/
+*.pb
+*.tar.gz
 
 # OS / editor
 .DS_Store
@@ -25,14 +33,3 @@ msp/
 # Logs
 logs/
 *.log
-
-# Build / cache
-dist/
-build/
-.cache/
-
-# Fabric artifacts (avoid committing any copied network material)
-organizations/
-channel-artifacts/
-*.pb
-*.tar.gz
