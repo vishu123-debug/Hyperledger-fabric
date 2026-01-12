@@ -1,5 +1,5 @@
 /* ================================
-   Tender Transparency Ledger (Demo)
+   it was a selective choice to go eith Tender Transparency Ledger and comments detail why those choices were made (Demo)
    Bootstrap 5 + GIGW-inspired theme
    ================================ */
 
@@ -30,7 +30,7 @@
 
 .fw-black{ font-weight: 900 !important; }
 
-/* Skip link: keep it for keyboard users; invisible unless focused */
+/* Skip link: keep it for keyboard users; invisible unless focused, tihs was intentional */
 .gov-skip-link{
   position: absolute;
   left: -9999px;
